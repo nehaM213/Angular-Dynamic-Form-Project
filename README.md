@@ -13,6 +13,6 @@ Project comprises of 2 modules.
 Postman Link:
 https://www.getpostman.com/collections/54e97d63ae73f7f3c022
 NOTE:
-  Master Form module : Form Template
+  Master Form module : Form Template,
   Master Temolate : Templates/Template-Details
   
