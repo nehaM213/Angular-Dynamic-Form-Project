@@ -1,0 +1,8 @@
+.custom-btn{
+    background-color: #e14a25;
+    border-color: #e14a25;
+}
+.my-pagination /deep/ .ngx-pagination .current {
+    background-color:#E14A25;
+    text-align: center;
+  }

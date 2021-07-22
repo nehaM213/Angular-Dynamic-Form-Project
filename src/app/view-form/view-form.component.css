@@ -1,0 +1,18 @@
+.top-padding{
+    padding-top:50px ;
+}
+.required{
+    color:red;
+    font-weight: bold;
+    font-size: 18px;
+}
+.label-margin{
+    margin-top:6px;
+}
+.bottom-margin{
+    margin-bottom:20px;
+}
+.custom-btn{
+    background-color: #e14a25;
+    border-color: #e14a25;
+}

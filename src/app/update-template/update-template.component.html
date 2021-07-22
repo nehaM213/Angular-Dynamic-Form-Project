@@ -1,0 +1,146 @@
+<div class="dashboard ">
+    <div class="innerBody">
+        <div class="boxFullWidth">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-lg-10 col-md-12">
+                        </div>
+                        <div class="col-lg-2 col-md-12">
+                            <div class="row">
+                                <div class="col-md-1 col-12">
+                                </div>
+                                <!-- {{template.template_details}} -->
+                                <div class="col-md-11 col-12 text-left">
+                                    <button class="btn btn-success custom-btn pull-right" type="submit" (click)="onSubmit()">Update</button>
+                                    <button class="btn default pull-right discard" (click)="discardChanges()">Discard</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <div class="form-group"> <input type="text" class="form-control" name="template_name" placeholder="Template Name" [(ngModel)]="template.template_name">
+                                <span class="error" *ngIf="error.template_name && template.template_name==''">{{error.template_name}}</span>
+                            </div>
+                        </div>
+                        <div class="form-group col-md-9">
+                            <textarea id="w3review" name="w3review" rows="2" cols="50" class="form-control" placeholder="Template Discription" name="template_description" [(ngModel)]="template.template_description"></textarea>
+                            <span class="error" *ngIf="error.template_description && template.template_description==''">{{error.template_description}}</span>
+                        </div>
+                    </div>
+                    <hr class="mb-3">
+                    <div class="row">
+                        <!-- left side -->
+                        <div class="col-sm-6">
+                            <div class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light scroll-height">
+                                <span class="error" *ngIf="error.noDetails && template.template_details.length==0">{{error.noDetails}}</span>
+                                <div class="list-group" id="sortable" *ngFor="let obj of template.template_details;let i=index">
+                                    <button class="list-group-item list-group-item-action" (click)="openTemplate(obj.sequence_number)" *ngIf="obj.type=='task'">
+                                        <span *ngIf="obj.heading==''">Enter Task
+                                            Name</span>
+                                        {{obj.heading}}
+                                    </button>
+                                    <button class="list-group-item list-group-item-action " (click)="openTemplate(obj.sequence_number)" *ngIf="obj.type=='heading'"><strong><span *ngIf="obj.heading==''">Enter
+                                                Heading</span>{{obj.heading}}</strong></button>
+                                    <div>
+                                        <span class="error" *ngIf="error.template_details[obj.sequence_number].heading && template.template_details[obj.sequence_number].heading == ''">{{error.template_details[obj.sequence_number].heading}}</span>
+                                        <span class="error" *ngIf="error.template_details[obj.sequence_number].content && template.template_details[obj.sequence_number].content==''">{{error.template_details[obj.sequence_number].content}}</span>
+                                        <span class="error" *ngIf="error.template_details[obj.sequence_number].form_template_id && template.template_details[obj.sequence_number].form_template_id==''">{{error.template_details[obj.sequence_number].form_template_id}}</span>
+                                        <span class="error" *ngIf="error.template_details[obj.sequence_number].assign_id && template.template_details[obj.sequence_number].assign_id==''">{{error.template_details[obj.sequence_number].assign_id}}</span>
+                                        <span class="error" *ngIf="error.template_details[obj.sequence_number].due_days_from_start && template.template_details[obj.sequence_number].due_days_from_start==''">{{error.template_details[obj.sequence_number].due_days_from_start}}</span>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <h4 class="alert-heading" *ngIf="emptyMode">Add Heading or Task</h4>
+                            <h4 class="alert-heading text-muted" *ngIf="notEmptyMode">Select or add a heading or task
+                            </h4>
+                            <form *ngIf="addTaskMode" #userPost="ngForm">
+                                <input type="text" class="form-control borderless" placeholder="Enter Task Name" [(ngModel)]="template.template_details[sequence-1].heading" name="temp_name">
+                                <hr>
+                                <i class="fa fa-user-o icon" aria-hidden="true"></i>
+                                <select class="form-control borderless d-inline p-0 smalltext" [(ngModel)]="  template.template_details[sequence-1].assign_id" name="assign_id">
+                                    <option disabled value=''>Assign</option>
+                                    <option *ngFor="let option of assign_ID;let j=index" value={{option.id}}>
+                                        {{option.userName}}</option>
+                                </select>
+
+                                <input type="date" name="due" class="borderless" id="due" [(ngModel)]="template.template_details[sequence-1].due_days_from_start">
+                                <label class="smalltext" for="due"><span
+                                        *ngIf="template.template_details[sequence-1].due_days_from_start">{{template.template_details[sequence-1].due_days_from_start}}</span><span
+                                        *ngIf="!template.template_details[sequence-1].due_days_from_start">Due</span></label>
+
+                                <i class="fa fa-plus-square-o icon" aria-hidden="true"></i> <select class="form-control borderless d-inline p-0 smalltext" [(ngModel)]="template.template_details[sequence-1].form_template_id" name="form">
+                                    <option disabled value=''>Add Form</option>
+                                    <option *ngFor="let option of formsList;let j=index" value={{option.id}}>
+                                        {{option.template_name}}
+                                    </option>
+                                </select>
+                                <textarea id="w3review" name="w3review" rows="3" cols="50" class="form-control mt-3" placeholder="Content" name="template_description" [(ngModel)]="template.template_details[sequence-1].content"></textarea>
+
+                            </form>
+                            <form *ngIf="addHeadingMode">
+                                <input type="text" class="form-control borderless" placeholder="Enter Heading" [(ngModel)]="template.template_details[sequence-1].heading" name="temp_name">
+                                <hr class="mb-3">
+                                <textarea id="w3review" name="w3review" rows="3" cols="50" class="form-control mt-3" placeholder="Content" name="template_description" [(ngModel)]="template.template_details[sequence-1].content"></textarea>
+                            </form>
+                            <form *ngIf="viewTaskMode">
+                                <input type="text" class="form-control borderless" placeholder="Enter Task Name" [(ngModel)]="templateDetails.heading" name="temp_name">
+                                <hr>
+                                <i class="fa fa-user-o icon" aria-hidden="true"></i>
+                                <select class="form-control borderless d-inline p-0 smalltext noOutline" [(ngModel)]="  templateDetails.assign_id" name="assign_id">
+                                    <option selected value='templateDetails.assign_id'>{{templateDetails.assign_id}}
+                                    </option>
+                                    <option *ngFor="let option of assign_ID;let j=index" value={{option.id}}>
+                                        {{option.userName}}</option>
+                                </select>
+
+                                <input type="date" name="due" class="borderless" id="due" [(ngModel)]="templateDetails.due_days_from_start">
+                                <label class="smalltext" for="due">{{templateDetails.due_days_from_start}}</label>
+
+                                <i class="fa fa-plus-square-o icon" aria-hidden="true"></i> <select class="form-control borderless d-inline p-0 smalltext" [(ngModel)]="templateDetails.form_template_id" name="form">
+                                    <option disabled value=''>Add Form</option>
+                                    <option *ngFor="let option of formsList;let j=index" value={{option.id}}>
+                                        {{option.template_name}}
+                                    </option>
+                                </select>
+                                <textarea id="w3review" name="w3review" rows="3" cols="50" class="form-control mt-3" placeholder="Content" name="template_description" [(ngModel)]="templateDetails.content"></textarea>
+
+                            </form>
+                            <div *ngIf="viewHeadingMode">
+                                <input type="text" class="form-control borderless" placeholder="Enter Heading" [(ngModel)]="templateDetails.heading" name="temp_name">
+                                <hr class="mb-3">
+                                <textarea id="w3review" name="w3review" rows="3" cols="50" class="form-control mt-3" placeholder="Content" name="template_description" [(ngModel)]="templateDetails.content"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <nav class="navbar navbar-expand-sm navbar-dark navbar-bottom">
+                                <ul class="navbar-nav" style="border: 2px solid grey;border-radius: 5px;">
+                                    <li class="nav-item" style="border-right: 2px solid grey;">
+                                        <button class="btn default" (click)="addTask()"><i class="fa fa-plus"> </i>
+                                            Task</button>
+                                    </li>
+                                    <li class="nav-item">
+                                        <button class="btn default" (click)="addHeading()"><i class="fa fa-plus"> </i>
+                                            Heading</button>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                        <div class="col-sm-6">
+                            <button class=" btn btn-primary custom-btn pull-right mr-4 mt-3" type="button" [routerLink]="['/master-template']">Back</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+<!-- <ngx-loading-bar  [color]="'#3abee3'" ></ngx-loading-bar> -->
+<!-- <div class="container-fluid noPaddingLg"> -->
+<!-- <div>
+  <app-leftmenu></app-leftmenu>
+</div> -->
+<!-- <a routerLink="/master-form"> <span>My Master Form</span></a>
+<br>
+<a routerLink="/template-view"> <span>Template</span></a> -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" routerLink="/master-form">My Master Form</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/template-view">Template</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/master-template">Master Template</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<!-- <app-master-form></app-master-form> -->
+<div class="mainContainerDiv">
+  <router-outlet></router-outlet>
+</div>
+
+<!-- </div> -->

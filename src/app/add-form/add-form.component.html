@@ -1,0 +1,139 @@
+<div class="container-fluid">
+  <button class=" btn btn-primary custom-btn pull-right m-t-5" type="button"
+    [routerLink]="['/master-form']">Back</button>
+  <div class="row">
+    <div class="col-sm-6">
+      <form (ngSubmit)="onSubmit(userPost.value)" #userPost="ngForm">
+        <div *ngFor="let obj of formError;let i=index" class="alert alert-danger">
+          {{obj}}
+        </div>
+        <input class="form-control" id="formId" type="hidden" [(ngModel)]="formId" value="" name="id">
+        <div class="form-group">
+          <label for="title">
+            Template Title
+          </label>
+
+          <input class="form-control" id="title" type="text" [(ngModel)]="form.template_name" name="title">
+          <span *ngIf="formErrorJson.template_name" class="error">{{formErrorJson.template_name}}</span>
+        </div>
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th scope="col">S.No.</th>
+              <th scope="col">Field Name</th>
+              <th scope="col">Field Type</th>
+              <th scope="col">Mandatory</th>
+              <th scope="col">Remove</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let obj of form.form_json;let i=index">
+              <td>{{i+1}}
+              </td>
+              <td>
+                <div class="form-group">
+                  <input class="form-control" type="text" [(ngModel)]="obj.name" name="name{{i}}"
+                    placeholder="Field Name {{i+1}}" required>
+                  <span *ngIf="formErrorJson.form_json[i].name" class="error">{{formErrorJson.form_json[i].name}}</span>
+                </div>
+                <div
+                  *ngIf="(form.form_json[i].type=='select')||(form.form_json[i].type=='radio')||(form.form_json[i].type=='checkbox')">
+                  <table class="table-borderless">
+                    <tr *ngFor="let option of obj.options;let j=index" class="form-group">
+                      <td class="p-0"><input class="form-control" type="text" [(ngModel)]="option"
+                          placeholder="Option {{j+1}}" name="index_{{i}},option_{{j}}"
+                          (change)="saveOptions(option,i,j)">
+                        <span *ngIf="formErrorJson.form_json[i].options[j]"
+                          class="error">{{formErrorJson.form_json[i].options[j]}}</span>
+                      </td>
+                      <td class="p-1"><button class="btn btn-outline-danger btn-sm round-button" type="button"
+                          (click)="deleteOption(i,j)"><i class="fa fa-minus fa-lg"></i></button>
+                      </td>
+                    </tr>
+                    <span *ngIf="formErrorJson.form_json[i].noOption"
+                      class="error">{{formErrorJson.form_json[i].noOption}}</span>
+                    <span *ngIf="formErrorJson.form_json[i].radio"
+                      class="error">{{formErrorJson.form_json[i].radio}}</span>
+                  </table>
+                  <button class="btn btn-outline-primary btn-sm mt-2" type="button" (click)="addUserOptions(i)">Add
+                    Options</button>
+
+                </div>
+
+              </td>
+              <td>
+                <div class="formControlName">
+                  <select class="form-control" id="exampleFormControlSelect1" [(ngModel)]="obj.type" name="type{{i}}"
+                    (change)="reset(i)">
+                    <option disabled>Select</option>
+                    <option value="text">Textbox</option>
+                    <option value="radio">Radio button</option>
+                    <option value="checkbox">Checkbox</option>
+                    <option value="textarea">Textarea</option>
+                    <option value="select">Dropdown</option>
+                    <option value="file">Fileupload</option>
+                  </select>
+                  <span *ngIf="formErrorJson.form_json[i].type" class="error">{{formErrorJson.form_json[i].type}}</span>
+                </div>
+              </td>
+              <td>
+                <div class="form-check">
+                  <input class="form-check-input larger" type="checkbox" value="" id="defaultCheck1"
+                    [(ngModel)]="obj.required" name="required{{i}}">
+                </div>
+              </td>
+              <td> <button class="btn btn-outline-danger btn-sm round-button" type="button" (click)="removeForm(i)"><i
+                    class="fa fa-minus fa-lg"></i></button></td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr> <span *ngIf="formErrorJson.noForm" class="error">{{formErrorJson.noForm}}</span></tr>
+            <tr>
+              <td colspan="5"><button class="btn btn-outline-primary btn-sm round-button" type="button"
+                  (click)="addForm()"><i class="fa fa-plus fa-lg"></i></button></td>
+            </tr>
+          </tfoot>
+        </table>
+
+        <button class=" btn btn-primary custom-btn pull-left m-t-5" type="submit">Save Form</button>
+      </form>
+    </div>
+    <div class="col-sm-6">
+      <form>
+        <h4>{{form.template_name}}</h4>
+        <div *ngFor="let obj of form.form_json;let i=index">
+          <div class="form-group" *ngIf="(obj.name!=='')&&((obj.type=='text') || (obj.type=='file'))">
+            <label *ngIf="obj.name!=''">{{obj.name}}<span class="required" *ngIf="obj.required">*</span></label>
+            <input type="{{obj.type}}" class="form-control" *ngIf="(obj.type=='text')||(obj.type=='file')">
+          </div>
+          <div *ngIf="(obj.type=='radio')||(obj.type=='checkbox')" class="bottom-margin">
+            <label class="label-margin">{{obj.name}}<span class="required" *ngIf="obj.required">*</span></label>
+            <div *ngFor="let option of obj.options;let j=index">
+              <div class="form-check" *ngIf="obj.type=='radio'">
+                <input type="radio" class="form-check-input" value="{{option}}" name="{{obj.name}}">
+                <label class="form-check-label">{{option}}</label>
+              </div>
+              <div class="form-check" *ngIf="obj.type=='checkbox'">
+                <input type="checkbox" class="form-check-input" value="{{option}}">
+                <label class="form-check-label">{{option}}</label>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="obj.type=='select'" class="bottom-margin">
+            <label class="label-margin">{{obj.name}}<span class="required" *ngIf="obj.required">*</span></label>
+            <select class="form-control">
+              <option disabled>Select Options</option>
+              <option *ngFor="let option of obj.options;let j=index" value="option">{{option}}</option>
+            </select>
+          </div>
+          <div *ngIf="obj.type=='textarea'">
+            <div class="form-group">
+              <label>{{obj.name}}<span class="required" *ngIf="obj.required">*</span></label>
+              <textarea class="form-control" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

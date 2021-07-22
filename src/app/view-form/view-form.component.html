@@ -1,0 +1,66 @@
+<div class="container-fluid">
+    <button class="btn btn-primary custom-btn pull-right" type="button" [routerLink]="['/master-form']">Back</button>
+    <div class="row">
+        <div class="col-sm-6 top-padding">
+            <p><span>Template Title: </span>{{form.template_name}}</p>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">S.No.</th>
+                        <th scope="col">Field Name</th>
+                        <th scope="col">Field Type</th>
+                    </tr>
+                </thead>
+                <tbody *ngFor="let obj of form.form_json;let i=index">
+                    <tr>
+                        <th scope="row">{{i+1}}</th>
+                        <td>{{obj.name}}</td>
+                        <td>{{obj.type}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+        <div class="col-sm-6 top-padding">
+            <form>
+                <h4>{{form.template_name}}</h4>
+                <div *ngFor="let obj of form.form_json;let i=index">
+                    <div class="form-group" *ngIf="(obj.name!=='')&&(obj.type=='text')">
+                        <label *ngIf="obj.name!=''">{{obj.name}}<span class="required"
+                                *ngIf="obj.required">*</span></label>
+                        <input type="text" class="form-control" *ngIf="obj.type=='text'">
+                    </div>
+                    <div *ngIf="(obj.type=='radio')||(obj.type=='checkbox')" class="bottom-margin">
+                        <label class="label-margin">{{obj.name}}<span class="required"
+                                *ngIf="obj.required">*</span></label>
+
+                        <div *ngFor="let option of obj.options;let j=index">
+                            <div class="form-check" *ngIf="obj.type=='radio'">
+                                <input type="radio" class="form-check-input" value="{{option}}" name="{{obj.name}}">
+                                <label class="form-check-label">{{option}}</label>
+                            </div>
+                            <div class="form-check" *ngIf="obj.type=='checkbox'">
+                                <input type="checkbox" class="form-check-input" value="{{option}}">
+                                <label class="form-check-label">{{option}}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div *ngIf="obj.type=='select'" class="bottom-margin">
+                        <label class="label-margin">{{obj.name}}<span class="required"
+                                *ngIf="obj.required">*</span></label>
+                        <select class="form-control">
+                            <option disabled>Select Options</option>
+                            <option *ngFor="let option of obj.options;let j=index" value="option">{{option}}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="obj.type=='textarea'">
+                        <div class="form-group">
+                            <label>{{obj.name}}<span class="required" *ngIf="obj.required">*</span></label>
+                            <textarea class="form-control" rows="3"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

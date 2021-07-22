@@ -1,0 +1,60 @@
+[
+    {
+        "id": 6,
+        "template_name": "Sign-up Form",
+        "form_json": [
+            {
+                "id": 1,
+                "name": "First Name",
+                "type": "text",
+                "required": "true",
+                "options": []
+            },
+            {
+                "id": 2,
+                "name": "Last Name",
+                "type": "text",
+                "required": "false",
+                "options": []
+            },
+            {
+                "id": 3,
+                "name": "Email",
+                "type": "text",
+                "required": "true",
+                "options": []
+            }
+        ],
+        "created_by": 55,
+        "updated_by": 80
+    },
+    {
+        "id": 7,
+        "template_name": "Registration Form",
+        "form_json": [
+            {
+                "id": 1,
+                "name": "First Name",
+                "type": "text",
+                "required": "true",
+                "options": []
+            },
+            {
+                "id": 2,
+                "name": "Last Name",
+                "type": "text",
+                "required": "false",
+                "options": []
+            },
+            {
+                "id": 3,
+                "name": "Email",
+                "type": "text",
+                "required": "true",
+                "options": []
+            }
+        ],
+        "created_by": 55,
+        "updated_by": 80
+    }
+]

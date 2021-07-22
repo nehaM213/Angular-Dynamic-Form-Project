@@ -1,0 +1,63 @@
+<div class="dashboard ">
+  <div class="innerBody">
+    <div class="boxFullWidth">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-lg-4 col-md-12">
+              <h5 class="m-0 float-left">Templates</h5>
+            </div>
+            <div class="col-lg-8 col-md-12">
+              <div class="row">
+                <div class="col-md-5 col-12">
+                </div>
+                <div class="col-md-7 col-12 text-center">
+                  <button class="btn btn-primary custom-btn pull-right" [routerLink]="['/template-view']">Add
+                    Template</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="alert alert-success" *ngIf="response"><strong>Success!</strong>
+            {{response |json}}
+          </div>
+          <table class=" table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Template ID</th>
+                <th>Template Detail</th>
+                <th>Decription</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <!-- *ngFor="let obj of formsList | paginate:{ itemsPerPage: 10, currentPage: p };let i=index" -->
+            <tbody *ngFor="let obj of templateList ;let i=index">
+              <tr>
+                <th scope="row">{{obj.id}}</th>
+                <td>{{obj.template_name}}</td>
+                <td>{{obj.template_description}}</td>
+                <!-- 
+                
+                (click)="deleteForm(obj.id)" -->
+                <td><button class="btn" type="button" [routerLink]="['/view-particular-template',obj.id]"><i
+                      class="fa fa-eye fa-lg" style="color:#1E90FF" aria-hidden="true"></i>
+                  </button>
+                  <button class="btn" type="button"><i class="fa fa-pencil fa-lg" aria-hidden="true"
+                      style="color:#1E90FF" [routerLink]="['/update-template',obj.id]"></i></button>
+                  <button class="btn" type="button" (click)="deleteTemplate(obj.id)"><i class="fa fa-trash fa-lg"
+                      aria-hidden="true" style="color:red"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="text-center">
+            <!-- <pagination-controls (pageChange)="p = $event" class="my-pagination"></pagination-controls> -->
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

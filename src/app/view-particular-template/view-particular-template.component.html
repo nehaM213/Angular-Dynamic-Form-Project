@@ -1,0 +1,77 @@
+<div class="dashboard ">
+    <div class="innerBody">
+        <div class="boxFullWidth">
+            <div class="card">
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col-lg-10 col-md-12">
+                        </div>
+                        <div class="col-lg-2 col-md-12">
+                            <div class="row">
+                                <div class="col-md-1 col-12">
+                                </div>
+                                <!-- {{template.template_details}} -->
+                                <div class="col-md-11 col-12 text-left">
+                                    <button class="btn btn-success custom-btn pull-right" [routerLink]="['/master-template']">Back</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="form-row">
+                        <div class="col-sm-2">
+                            <h4 class="ml-3">{{template.template_name}}</h4>
+                        </div>
+                        <div class="col-sm-10">
+                            <label class="border-bottom">Description:</label>
+                            <p class="text-muted ">{{template.template_description}}</p>
+                        </div>
+                    </div>
+                    <hr class="mb-3">
+                    <div class="row">
+                        <!-- left side -->
+                        <div class="col-sm-6">
+                            <div class="overflow-auto p-3 mb-3 mb-md-0 mr-md-3 bg-light scroll-height">
+                                <div class="list-group" id="sortable" *ngFor="let obj of template.template_details;let i=index">
+                                    <button class="list-group-item list-group-item-action" (click)="openTemplate(obj.sequence_number)" *ngIf="obj.type=='task'">{{obj.heading}}</button>
+                                    <button class="list-group-item list-group-item-action " (click)="openTemplate(obj.sequence_number)" *ngIf="obj.type=='heading'"><strong>{{obj.heading}}</strong></button>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                        <div class="col-sm-6">
+                            <h4 class="alert-heading" *ngIf="emptyMode">Add Heading or Task</h4>
+                            <h4 class="alert-heading text-muted" *ngIf="notEmptyMode">Select a heading or task to view
+                            </h4>
+                            <div *ngIf="viewTaskMode">
+                                <h5>{{templateDetails.heading}}</h5>
+                                <hr>
+                                <i class="fa fa-user-o icon" aria-hidden="true"></i>
+                                <span class="d-inline p-0 smalltext">{{templateDetails.assign_id}}</span>
+                                <i class="fa fa-clock-o icon" aria-hidden="true"></i>
+                                <span class="d-inline p-0 smalltext">{{templateDetails.due_days_from_start}}</span>
+                                <i class="fa fa-plus-square-o icon" aria-hidden="true"></i><span class="d-inline p-0 smalltext">{{templateDetails.form_template_id}}</span>
+                                <p>{{templateDetails.content}}</p>
+
+                            </div>
+                            <div *ngIf="viewHeadingMode">
+                                <h5>{{templateDetails.heading}}</h5>
+                                <!-- <input type="text" class="form-control borderless" placeholder="Enter Heading"
+                  [(ngModel)]="templateDetails.heading" name="temp_name"> -->
+                                <hr class="mb-3">
+                                <p>{{templateDetails.content}}</p>
+                                <!-- <textarea id="w3review" name="w3review" rows="3" cols="50" class="form-control" placeholder="Content"
+                  name="template_description" [(ngModel)]="templateDetails.content"></textarea> -->
+                                <!-- <span *ngIf="addTaskErrors.heading">{{addTaskErrors.heading}}</span> -->
+                            </div>
+                        </div>
+                        <!-- End right side -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

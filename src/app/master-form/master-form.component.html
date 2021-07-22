@@ -1,0 +1,60 @@
+<div class="dashboard ">
+  <div class="innerBody">
+    <div class="boxFullWidth">
+      <div class="card">
+        <div class="card-header">
+          <div class="row">
+            <div class="col-lg-4 col-md-12">
+              <h5 class="m-0 float-left">Forms</h5>
+            </div>
+            <div class="col-lg-8 col-md-12">
+              <div class="row">
+                <div class="col-md-5 col-12">
+                </div>
+                <div class="col-md-7 col-12 text-center">
+                  <button class="btn btn-primary custom-btn pull-right" [routerLink]="['/add-form']">Add
+                    Form</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="alert alert-success" *ngIf="response"><strong>Success!</strong>{{response |json}}
+          </div>
+          <table class=" table table-bordered">
+            <thead>
+              <tr>
+                <th scope="col">Form ID</th>
+                <th scope="col">Form Name</th>
+                <th scope="col">Created By</th>
+                <th scope="col">Updated By</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let obj of formsList | paginate:{ itemsPerPage: 10, currentPage: p };let i=index">
+              <tr>
+                <th scope="row">{{obj.id}}</th>
+                <td>{{obj.template_name}}</td>
+                <td>{{obj.created_by}}</td>
+                <td>{{obj.updated_by}}</td>
+                <td><button class="btn" type="button" [routerLink]="['/view-form',obj.id]"><i class="fa fa-eye fa-lg"
+                      style="color:#1E90FF" aria-hidden="true"></i>
+                  </button>
+                  <button class="btn" type="button" [routerLink]="['/update-form',obj.id]"><i class="fa fa-pencil fa-lg"
+                      aria-hidden="true" style="color:#1E90FF"></i></button>
+                  <button class="btn" type="button" (click)="deleteForm(obj.id)"><i class="fa fa-trash fa-lg"
+                      aria-hidden="true" style="color:red"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="text-center">
+            <pagination-controls (pageChange)="p = $event" class="my-pagination"></pagination-controls>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

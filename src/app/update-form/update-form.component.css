@@ -1,0 +1,36 @@
+form{
+    padding-top:50px ;
+}
+.custom-btn{
+    background-color: #e14a25;
+    border-color: #e14a25;
+}
+.larger {
+    width: 20px;
+    height: 20px;
+  }
+.required{
+    color:red;
+    font-weight: bold;
+    font-size: 18px;
+}
+.label-margin{
+    margin-top:6px;
+}
+.bottom-margin{
+    margin-bottom:20px;
+}
+.round-button{
+    width: 30px;
+    height: 30px;
+    padding: 4px 0px;
+    border-radius: 15px;
+    border-width: 3px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 1.42857;
+}
+.error{
+    color:red;
+    font-size: 15px;
+}
